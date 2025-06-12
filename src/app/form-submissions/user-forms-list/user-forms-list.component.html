@@ -1,0 +1,17 @@
+<div class="forms-container">
+    <h2>Available Forms</h2>
+
+    <div *ngIf="forms.length === 0" class="text-muted text-center">
+        <p>No forms available at the moment.</p>
+    </div>
+
+    <div class="form-card-grid">
+        <div *ngFor="let form of forms" class="form-card mat-elevation-z2">
+            <h5>{{ form.name }}</h5>
+            <p *ngIf="form.description">{{ form.description }}</p>
+            <button mat-raised-button color="primary" (click)="fillForm(form.id)">
+                Fill Form
+            </button>
+        </div>
+    </div>
+</div>

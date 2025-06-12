@@ -1,0 +1,116 @@
+<div class="container mt-4">
+    <h2 class="text-center font-weight-bold mb-5">Dynamic Form Builder</h2>
+
+    <div class="row">
+        <!-- Form Elements Palette -->
+        <div class="col-12 col-md-4 mb-4">
+            <div class="card shadow-sm h-100">
+                <div class="card-header bg-primary text-white text-center">
+                    <h5 class="mb-0">Form Elements</h5>
+                </div>
+                <div cdkDropList [cdkDropListData]="availableFields" class="list-group border-0 p-3 bg-light"
+                    [cdkDropListConnectedTo]="['formFieldsList']" (cdkDropListDropped)="drop($event)">
+                    <div class="list-group-item list-group-item-action mb-2 text-center"
+                        *ngFor="let field of availableFields" cdkDrag>
+                        {{ field }}
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Form Preview -->
+        <div class="col-12 col-md-8">
+            <div class="card shadow-sm">
+                <div class="card-header bg-success text-white text-center">
+                    <h5 class="mb-0">Form Preview</h5>
+                </div>
+
+                <div class="card-body">
+                    <!-- Form Name Input -->
+                    <div class="form-group mb-4">
+                        <label class="font-weight-bold" for="formName">Form Name</label>
+                        <input id="formName" type="text" class="form-control" [(ngModel)]="formName" name="formName"
+                            placeholder="Enter form name" />
+                    </div>
+
+                    <form [formGroup]="form" (ngSubmit)="submitForm()">
+                        <div id="formFieldsList" cdkDropList [cdkDropListData]="formFields"
+                            class="border rounded p-3 bg-light" [cdkDropListConnectedTo]="['availableFieldsList']"
+                            (cdkDropListDropped)="drop($event)">
+                            <div *ngIf="formFields.length === 0" class="text-muted text-center">
+                                Drag fields here to build your form.
+                            </div>
+
+                            <div class="border rounded p-3 mb-3 bg-white shadow-sm" *ngFor="let field of formFields"
+                                cdkDrag>
+                                <div class="form-group mb-2">
+                                    <label class="font-weight-bold">{{ field.label || '(No Label)' }}</label>
+
+                                    <!-- Text Input -->
+                                    <input *ngIf="field.type === 'text'" type="text" class="form-control"
+                                        [formControlName]="field.id" />
+
+                                    <!-- Textarea -->
+                                    <textarea *ngIf="field.type === 'textarea'" class="form-control"
+                                        [formControlName]="field.id"></textarea>
+
+                                    <!-- Date -->
+                                    <input *ngIf="field.type === 'date'" type="date" class="form-control"
+                                        [formControlName]="field.id" />
+
+                                    <!-- Dropdown -->
+                                    <select *ngIf="field.type === 'select'" class="form-control"
+                                        [formControlName]="field.id">
+                                        <option *ngFor="let option of field.options" [value]="option">
+                                            {{ option }}
+                                        </option>
+                                    </select>
+
+                                    <!-- Radio -->
+                                    <div *ngIf="field.type === 'radio'">
+                                        <div *ngFor="let option of field.options" class="form-check form-check-inline">
+                                            <input type="radio" [formControlName]="field.id" [value]="option"
+                                                class="form-check-input" [id]="field.id + '_' + option" />
+                                            <label class="form-check-label" [for]="field.id + '_' + option">
+                                                {{ option }}
+                                            </label>
+                                        </div>
+                                    </div>
+
+                                    <!-- Checkbox -->
+                                    <div *ngIf="field.type === 'checkbox'">
+                                        <div *ngFor="let option of field.options" class="form-check">
+                                            <input type="checkbox" class="form-check-input"
+                                                [id]="field.id + '_' + option"
+                                                (change)="onCheckboxChange($event, field.id, option)"
+                                                [checked]="form.get(field.id)?.value?.includes(option)" />
+                                            <label class="form-check-label" [for]="field.id + '_' + option">
+                                                {{ option }}
+                                            </label>
+                                        </div>
+                                    </div>
+
+                                    <small *ngIf="field.helpText" class="text-muted d-block mt-1">
+                                        {{ field.helpText }}
+                                    </small>
+                                </div>
+
+                                <button mat-button color="primary" class="btn btn-outline-primary btn-sm"
+                                    (click)="selectField(field)" type="button">
+                                    Configure
+                                </button>
+                            </div>
+                        </div>
+
+                        <button mat-raised-button color="accent" class="btn btn-success btn-block mt-4 py-2"
+                            type="submit">
+                            Submit Form
+                        </button>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Config Panel -->
+        </div>
+    </div>
+</div>

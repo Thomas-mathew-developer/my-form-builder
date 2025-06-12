@@ -1,0 +1,28 @@
+<div class="container mt-4" *ngIf="submission">
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <h2 class="mb-0">{{ submission.formName }} Submission</h2>
+        <button mat-stroked-button color="primary" routerLink="/submissions">
+            <mat-icon>arrow_back</mat-icon> Back
+        </button>
+    </div>
+
+    <p class="text-muted mb-4">
+        <mat-icon class="mr-1">schedule</mat-icon>
+        Submitted on: {{ submission.timestamp | date:'short' }}
+    </p>
+
+    <div class="card shadow-sm p-3">
+        <h5 class="mb-3">Submitted Data</h5>
+
+        <div *ngFor="let key of objectKeys(submission.data)" class="border-bottom py-2">
+            <strong class="text-capitalize">{{ key }}:</strong>
+            <span class="ml-2">{{ submission.data[key] }}</span>
+        </div>
+    </div>
+
+    <div class="mt-4">
+        <button mat-raised-button color="primary" routerLink="/submissions">
+            <mat-icon>list</mat-icon> Back to Submissions
+        </button>
+    </div>
+</div>

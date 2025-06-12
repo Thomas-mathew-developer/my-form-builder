@@ -1,0 +1,41 @@
+:host {
+    display: block;
+    height: 100vh;
+}
+
+.app-container {
+    height: 100%;
+}
+
+mat-sidenav-content {
+    display: flex;
+    flex-direction: column;
+    min-height: 100%;
+    padding: 16px;
+    background: #f5f5f5;
+    height: 100vh;
+}
+
+mat-sidenav {
+    width: 220px;
+}
+
+.app-title {
+    margin-left: 16px;
+    font-weight: 500;
+    font-size: 18px;
+}
+
+.spacer {
+    flex: 1 1 auto;
+}
+
+@media (min-width: 767.99px) {
+}
+@media (max-width: 767.98px) {
+
+    // App name hidden due to space issue. Actually toolbar user name and logout option will come in dropdown on the right side in the next phase
+    .app-title{
+        display: none;
+    }
+}

@@ -1,0 +1,46 @@
+.forms-container {
+    padding: 16px;
+
+    h2 {
+        margin-bottom: 16px;
+    }
+}
+
+.form-card-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 16px;
+}
+
+.form-card {
+    background: #fff;
+    padding: 16px;
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+
+    h5 {
+        margin: 0 0 8px 0;
+        font-size: 18px;
+        font-weight: 600;
+    }
+
+    p {
+        flex: 1;
+        font-size: 14px;
+        color: #555;
+    }
+
+    button {
+        align-self: flex-start;
+        margin-top: 12px;
+    }
+}
+
+/* Optional: on very small screens, adjust padding */
+@media (max-width: 599px) {
+    .forms-container {
+        padding: 8px;
+    }
+}
