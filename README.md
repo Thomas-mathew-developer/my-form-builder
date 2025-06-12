@@ -53,7 +53,7 @@ This repository was created as a part of a coding challenge. If any requirement 
 
 ## 🛠️ Technical Stack
 
-- **Angular 20+**
+- **Angular 17+**
 - **TypeScript**
 - **Reactive Forms**
 - **Angular Material** for responsive UI components
