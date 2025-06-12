@@ -1,0 +1,58 @@
+<h3 class="mb-3">Configure Field</h3>
+
+<form [formGroup]="configForm">
+    <mat-form-field appearance="outline" class="w-100 mb-3">
+        <mat-label>Label</mat-label>
+        <input matInput formControlName="label" />
+    </mat-form-field>
+
+    <mat-checkbox formControlName="required" class="mb-3">Required</mat-checkbox>
+
+    <mat-form-field appearance="outline" class="w-100 mb-3">
+        <mat-label>Help Text</mat-label>
+        <input matInput formControlName="helpText" />
+    </mat-form-field>
+
+    <!-- Show validations only for text & textarea -->
+    <div *ngIf="field.type === 'text' || field.type === 'textarea'" class="mb-3">
+        <div class="row">
+            <div class="col-6">
+                <mat-form-field appearance="outline" class="w-100 mb-3">
+                    <mat-label>Min Length</mat-label>
+                    <input matInput type="number" formControlName="minLength" />
+                </mat-form-field>
+            </div>
+            <div class="col-6">
+                <mat-form-field appearance="outline" class="w-100 mb-3">
+                    <mat-label>Max Length</mat-label>
+                    <input matInput type="number" formControlName="maxLength" />
+                </mat-form-field>
+            </div>
+        </div>
+
+        <mat-form-field appearance="outline" class="w-100 mb-3">
+            <mat-label>Pattern</mat-label>
+            <input matInput formControlName="pattern" />
+        </mat-form-field>
+    </div>
+
+    <!-- Show options only for select, radio, checkbox -->
+    <div *ngIf="field.type === 'select' || field.type === 'radio' || field.type === 'checkbox'" class="mb-3">
+        <label class="font-weight-bold">Options</label>
+        <div *ngFor="let optCtrl of options.controls; let i = index" class="d-flex align-items-center mb-2">
+            <input matInput [formControl]="optCtrl" placeholder="Option {{ i + 1 }}" class="form-control mr-2" />
+            <button mat-icon-button color="warn" (click)="removeOption(i)">
+                <mat-icon>delete</mat-icon>
+            </button>
+        </div>
+        <button mat-button color="primary" (click)="addOption()" type="button">
+            <mat-icon>add</mat-icon>
+            Add Option
+        </button>
+    </div>
+
+    <div class="d-flex justify-content-end mt-4">
+        <button mat-stroked-button (click)="dialogRef.close()" class="mr-2">Cancel</button>
+        <button mat-raised-button color="primary" (click)="applyChanges()" type="button">Apply</button>
+    </div>
+</form>

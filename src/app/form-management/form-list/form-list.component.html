@@ -1,0 +1,41 @@
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h2>Saved Forms</h2>
+    <button mat-raised-button color="primary" routerLink="/form-builder" *ngIf="role === 'Admin'">
+        + New Form
+    </button>
+</div>
+
+<div *ngIf="formTemplates.length === 0" class="text-muted text-center mt-4">
+    <p>No forms saved yet.</p>
+</div>
+
+<div *ngIf="formTemplates.length > 0" class="table-container">
+    <table class="table table-striped table-hover align-middle">
+        <thead class="thead-light d-md-table-header-group">
+            <tr>
+                <th>#</th>
+                <th>Form Name</th>
+                <th class="text-center">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let form of formTemplates; let i = index">
+                <td data-label="#"> {{ i + 1 }} </td>
+                <td data-label="Form Name"> {{ form.name }} </td>
+                <td data-label="Actions" class="actions">
+                    <button mat-icon-button color="primary" (click)="onPreview(form)" matTooltip="Preview">
+                        <mat-icon>visibility</mat-icon>
+                    </button>
+                    <button mat-icon-button color="accent" (click)="onEdit(form)" matTooltip="Edit"
+                        *ngIf="role === 'Admin'">
+                        <mat-icon>edit</mat-icon>
+                    </button>
+                    <button mat-icon-button color="warn" (click)="onDelete(form.id)" matTooltip="Delete"
+                        *ngIf="role === 'Admin'">
+                        <mat-icon>delete</mat-icon>
+                    </button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>

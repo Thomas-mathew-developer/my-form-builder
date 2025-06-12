@@ -1,0 +1,57 @@
+<div class="container mt-4" *ngIf="formTemplate">
+    <h2>{{ formTemplate.name }} (Preview Mode)</h2>
+    <p *ngIf="formTemplate.description">{{ formTemplate.description }}</p>
+
+    <form [formGroup]="form">
+        <div *ngFor="let field of formTemplate.fields" class="mb-3">
+            <label class="form-label">{{ field.label }}</label>
+
+            <!-- Text Input -->
+            <input *ngIf="field.type === 'text'" class="form-control" [formControlName]="field.id" readonly />
+
+            <!-- Textarea -->
+            <textarea *ngIf="field.type === 'textarea'" class="form-control" [formControlName]="field.id"
+                readonly></textarea>
+
+            <!-- Date -->
+            <input *ngIf="field.type === 'date'" type="date" class="form-control" [formControlName]="field.id"
+                readonly />
+
+            <!-- Dropdown -->
+            <div *ngIf="field.type === 'select'">
+                <select class="form-select" [formControlName]="field.id" [disabled]="fieldsDisabled">
+                    <option *ngFor="let option of field.options" [value]="option">
+                        {{ option }}
+                    </option>
+                </select>
+            </div>
+
+            <!-- Radio -->
+            <div *ngIf="field.type === 'radio'">
+                <div *ngFor="let option of field.options" class="form-check">
+                    <input type="radio" class="form-check-input" [formControlName]="field.id" [value]="option"
+                        [id]="field.id + '_' + option" [disabled]="fieldsDisabled" />
+                    <label class="form-check-label" [for]="field.id + '_' + option">
+                        {{ option }}
+                    </label>
+                </div>
+            </div>
+
+            <!-- Checkbox -->
+            <div *ngIf="field.type === 'checkbox'">
+                <div *ngFor="let option of field.options" class="form-check">
+                    <input type="checkbox" class="form-check-input" [id]="field.id + '_' + option"
+                        [checked]="form.get(field.id)?.value?.includes(option)" disabled />
+                    <label class="form-check-label" [for]="field.id + '_' + option">
+                        {{ option }}
+                    </label>
+                </div>
+            </div>
+
+            <!-- Help Text -->
+            <small *ngIf="field.helpText" class="text-muted d-block mt-1">
+                {{ field.helpText }}
+            </small>
+        </div>
+    </form>
+</div>

@@ -1,0 +1,30 @@
+.card {
+    border-radius: 0.75rem;
+}
+
+.card-header {
+    font-size: 1.2rem;
+}
+
+.list-group-item {
+    cursor: move;
+    transition: all 0.3s ease;
+}
+
+.list-group-item:hover {
+    background-color: #f1f1f1;
+}
+
+.form-check-inline {
+    margin-right: 1rem;
+}
+
+@media (max-width: 576px) {
+    .card-body {
+        padding: 1rem;
+    }
+
+    h2 {
+        font-size: 1.5rem;
+    }
+}

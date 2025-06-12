@@ -1,0 +1,47 @@
+<mat-toolbar color="primary">
+  <button mat-icon-button (click)="sidenav.toggle()" aria-label="Toggle sidenav">
+    <mat-icon>menu</mat-icon>
+  </button>
+
+  <span class="app-title">{{ title }}</span>
+
+  <span class="spacer"></span>
+
+  <!-- User Info -->
+  <span class="text-white mr-3">Role: {{ role }}</span>
+  <button mat-button color="warn" (click)="logout()">Logout</button>
+</mat-toolbar>
+
+
+<mat-sidenav-container class="sidenav-container">
+  <mat-sidenav #sidenav [mode]="sidenavMode" [fixedInViewport]="sidenavMode === 'over'" class="sidenav">
+    <mat-nav-list>
+      <a mat-list-item routerLink="/form-builder" routerLinkActive="active"
+        (click)="sidenavMode === 'over' && sidenav.close()" *ngIf="role === 'Admin'">
+        <!-- <mat-icon matListIcon>build</mat-icon> -->
+        <span>Form Builder</span>
+      </a>
+      <a mat-list-item routerLink="/form-list" routerLinkActive="active"
+        (click)="sidenavMode === 'over' && sidenav.close()">
+        <!-- <mat-icon matListIcon>list</mat-icon> -->
+        <span>Form List</span>
+      </a>
+      <a mat-list-item routerLink="/submissions" routerLinkActive="active"
+        (click)="sidenavMode === 'over' && sidenav.close()">
+        <!-- <mat-icon matListIcon>assignment</mat-icon> -->
+        <span>Submissions</span>
+      </a>
+      <a mat-list-item routerLink="/submit-forms" routerLinkActive="active"
+        (click)="sidenavMode === 'over' && sidenav.close()" *ngIf="role === 'User'">
+        <!-- <mat-icon matListIcon>input</mat-icon> -->
+        <span>Submit Forms</span>
+      </a>
+    </mat-nav-list>
+  </mat-sidenav>
+
+  <mat-sidenav-content>
+    <div class="main-content">
+      <router-outlet></router-outlet>
+    </div>
+  </mat-sidenav-content>
+</mat-sidenav-container>
