@@ -15,6 +15,9 @@ import { FormStorageService } from '../form-management/services/form-storage.ser
 import { MatFormField, MatLabel } from '@angular/material/form-field';
 import { MatDialog } from '@angular/material/dialog';
 import { FieldConfigDialogComponent } from '../shared/components/field-config-dialog/field-config-dialog.component';
+import { Store } from '@ngrx/store';
+import * as FormBuilderActions from '../state/form-builder/form-builder.actions';
+
 
 @Component({
   selector: 'app-form-builder',
@@ -40,7 +43,8 @@ export class FormBuilderComponent implements OnInit {
     private fb: FormBuilder,
     private formStorage: FormStorageService,
     private route: ActivatedRoute,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private store: Store
   ) {
     this.form = this.fb.group({});
   }
@@ -124,8 +128,9 @@ export class FormBuilderComponent implements OnInit {
         required: false,
         options: []
       };
-      this.formFields.push(newField);
-      this.form.addControl(newField.id, this.fb.control(''));
+
+      this.store.dispatch(FormBuilderActions.addField({ field: newField }));
+
     }
   }
 
@@ -154,5 +159,14 @@ export class FormBuilderComponent implements OnInit {
         control.setValue(currentValue.filter((v: string) => v !== optionValue));
       }
     }
+  }
+
+  addField() {
+    const newField: FormField = {
+      id: Date.now().toString(),
+      label: 'New Field',
+      type: 'text',
+      required: false
+    };
   }
 }

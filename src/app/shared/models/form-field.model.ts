@@ -37,3 +37,8 @@ export interface FormTemplate {
   description?: string;
   fields: FormField[];
 }
+
+export interface FormBuilderState {
+  fields: FormField[];
+  selectedFieldId: string | null;
+}
